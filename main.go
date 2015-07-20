@@ -15,20 +15,24 @@ func index(w http.ResponseWriter, r *http.Request) {
 	case r.Method == "POST":
 		name, url := r.Form["name"][0], r.Form["url"][0]
 		Mapping[name] = url
-		http.Redirect(w, r, url, 301)
+		http.Redirect(w, r, url, 302)
 	case r.URL.Path == "/":
 		name := r.Form["name"]
 		if len(name) > 0 {
-			http.Redirect(w, r, "/"+name[0], 301)
+			http.Redirect(w, r, "/"+name[0], 302)
 		} else {
 			t, _ := template.ParseFiles("index.html")
 			context := make(map[string]string)
 			t.Execute(w, context)
 		}
+	case r.URL.Path == "/list":
+		for name, url := range Mapping {
+			fmt.Fprintf(w, "%s: %s", name, url)
+		}
 	default:
 		name := r.URL.Path[1:]
 		url := Mapping[name]
-		http.Redirect(w, r, url, 301)
+		http.Redirect(w, r, url, 302)
 	}
 }
 
