@@ -1,0 +1,10 @@
+{
+	"Database": {
+		"Type": "mysql",
+		"Name": "test",
+		"Host": "localhost",
+		"Port": 3306,
+		"User": "root",
+		"Pass": ""
+	}
+}
